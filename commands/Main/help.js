@@ -5,39 +5,20 @@ module.exports = {
 	aliases: ["h", "commands", "cmds"],
 	description: "Help Command",
 	run: async (client, message, args) => {
-		const row = new MessageActionRow().addComponents(
-			new MessageButton()
-				.setCustomId("primary")
-				.setLabel("Yes")
-				.setStyle("PRIMARY")
-		);
+		
+		const embed = new MessageEmbed();
+		const prefix = client.config.PREFIX;
+		const commands = Array.from(client.commands.values());
 
-		message.reply({
-			content: "Do you need help?",
-			components: [row],
-			ephemeral: true,
-		});
+		for (command of commands) {
+			embed.addField(
+				`**${prefix}${command.name}**`,
+				`__${
+					command.description
+				}__ \n**Aliases:** \`${command.aliases.join(", ")}\``, false
+			);
+		}
 
-		const filter = (i) =>
-			i.customId === "primary" && i.user.id === message.author.id;
-
-		const collector = message.channel.createMessageComponentCollector({
-			filter,
-			time: 15000,
-		});
-
-		collector.on("collect", async (i) => {
-			if (i.customId === "primary") {
-				await i.update({
-					content: "A button was clicked!",
-					components: [],
-				});
-			}
-		});
-
-		collector.on("end", (collected) => {
-			console.log(collected);
-			console.log(`Collected ${collected.size} items`);
-		});
+		message.reply({embeds: [embed]})
 	},
 };
