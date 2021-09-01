@@ -51,7 +51,7 @@ module.exports = {
 			await command.run(client, message, args);
 		} catch (err) {
 			return message.channel.send({
-				content: `**An error has occured**\n\`${err.message}\`\n\`${err.stack}\``,
+				content: `**An error has occured**\n\`${err.message}\`\n\`\`\`\n${err.stack}\`\`\``,
 				ephemeral: true,
 			});
 		}
