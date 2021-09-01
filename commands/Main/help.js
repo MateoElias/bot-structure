@@ -2,6 +2,7 @@ const { MessageEmbed, MessageActionRow, MessageButton } = require("discord.js");
 
 module.exports = {
 	name: "help",
+	category: "Main",
 	aliases: ["h", "commands", "cmds"],
 	description: "Help Command",
 	run: async (client, message, args) => {

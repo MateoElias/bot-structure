@@ -8,6 +8,9 @@ module.exports.validateModules = (command, commandName) => {
 	if (!command.hasOwnProperty("description"))
 		throw new Error(`${commandName} does not have a description`);
 
+	if (!command.hasOwnProperty("category"))
+		throw new Error(`${commandName} does not have a category`);
+
 	if (!command.hasOwnProperty("run"))
 		throw new Error(`${commandName} does not have a run function`);
 
@@ -16,6 +19,9 @@ module.exports.validateModules = (command, commandName) => {
 
 module.exports.checkProperty = (command, commandName) => {
 	if (typeof command.name !== "string")
+		throw new Error(`${command.name} is not a string`);
+
+	if (typeof command.category !== "string")
 		throw new Error(`${command.name} is not a string`);
 
 	if (typeof command.description !== "string")
